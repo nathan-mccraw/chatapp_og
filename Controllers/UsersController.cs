@@ -16,11 +16,11 @@ namespace ChatApp.Controllers
 
         public UsersController()
         {
-            users.Add(new User { FirstName = "Nathan", LastName = "McCraw", UserName = "NateRLTW175", UserId = 1 });
+            users.Add(new User { FirstName = "Nathan", LastName = "McCraw", UserName = "Nate", UserId = 1 });
             users.Add(new User { FirstName = "Jill", LastName = "McCraw", UserName = "Jill", UserId = 2 });
             users.Add(new User { FirstName = "Kathryn", LastName = "Blohm", UserName = "Kate", UserId = 3 });
-            users.Add(new User { FirstName = "Zachary", LastName = "McCraw", UserName = "Z Man", UserId = 4 });
-            users.Add(new User { FirstName = "Eryn", LastName = "McCraw", UserName = "Air_En", UserId = 5 });
+            users.Add(new User { FirstName = "Zachary", LastName = "McCraw", UserName = "Zach", UserId = 4 });
+            users.Add(new User { FirstName = "Eryn", LastName = "McCraw", UserName = "Eryn", UserId = 5 });
         }
 
         // GET: api/<MessagesController>

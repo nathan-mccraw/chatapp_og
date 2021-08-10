@@ -17,7 +17,7 @@ namespace ChatApp.Controllers
         public MessagesController()
         {
             messages.Add(new Message { MessageId = 1, UserName = "Nate", Content = "HEY HEY" });
-            messages.Add(new Message { MessageId = 2, UserName = "Air_En", Content = "What's Up" });
+            messages.Add(new Message { MessageId = 2, UserName = "Eryn", Content = "What's Up" });
             messages.Add(new Message { MessageId = 3, UserName = "Jill", Content = "Worddddd Up dawg" });
             messages.Add(new Message { MessageId = 4, UserName = "Zach", Content = "How's it poppin" });
             messages.Add(new Message { MessageId = 5, UserName = "Kate", Content = "My man!" });
