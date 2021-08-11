@@ -23,28 +23,28 @@ namespace ChatApp.Controllers
             messages.Add(new Message { MessageId = 5, UserName = "Kate", Content = "My man!" });
         }
 
-        // GET: api/<MessagesController>
+        // GET: api/messages
         [HttpGet]
         public List<Message> Get()
         {
             return messages;
         }
 
-        // GET api/<MessagesController>/5
+        // GET api/Messages/5
         [HttpGet("{id}")]
         public Message Get(int id)
         {
             return messages.Where(x => x.MessageId == id).FirstOrDefault();
         }
 
-        // POST api/<MessagesController>
+        // POST api/Messages
         [HttpPost]
         public void Post(Message value)
         {
             messages.Add(value);
         }
 
-        // DELETE api/<MessagesController>/5
+        // DELETE api/Messages/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
