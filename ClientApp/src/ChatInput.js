@@ -10,6 +10,8 @@ const ChatInput = ({
     showSignInModal,
     hideSignInModal,
     IsSignInModalOpen,
+    formState,
+    formChange,
     signIn,
 }) => {
     return (
@@ -56,7 +58,7 @@ const ChatInput = ({
                         <h3>Sign In</h3>
                     </Modal.Header>
                     <Modal.Body>
-                        <SignInModal signIn={signIn} />
+                        <SignInModal signIn={signIn} formState={formState} formChange={formChange} />
                     </Modal.Body>
                 </Modal>
             </div>

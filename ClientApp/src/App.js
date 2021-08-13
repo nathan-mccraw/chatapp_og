@@ -10,6 +10,11 @@ const App = () => {
     const [otherUsersArray, setOtherUsersArray] = useState("");
     const [chatMessage, setChatMessage] = useState("");
     const [IsSignInModalOpen, setIsSignInModalOpen] = useState(true);
+    const [formState, setFormState] = useState({
+        userName: "",
+        userPassword: "",
+        newUser: false,
+    });
     const [user, setUser] = useState({
         userId: "1",
         userName: "Guest",
@@ -45,7 +50,18 @@ const App = () => {
         setChatMessage("");
     };
 
-    const signIn = () => { };
+    const signIn = (e) => {
+        e.preventDefault();
+        console.log(formState);
+    };
+
+    const formChange = (e) => {
+        if (e.target.type === 'checkbox') {
+            setFormState({ ...formState, [e.target.name]: e.target.checked });
+        } else {
+            setFormState({ ...formState, [e.target.name]: e.target.value });
+        }
+    };
 
     return (
         <div className="App container-fluid vh-100">
@@ -66,6 +82,9 @@ const App = () => {
                             showSignInModal={showSignInModal}
                             hideSignInModal={hideSignInModal}
                             IsSignInModalOpen={IsSignInModalOpen}
+                            formState={formState}
+                            formChange={formChange}
+                            signIn={signIn}
                         />
                     </div>
                 </div>
