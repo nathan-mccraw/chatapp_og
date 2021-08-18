@@ -1,9 +1,11 @@
 import FriendsSideBar from "./FriendsSideBar";
 import ChatInput from "./ChatInput.js";
 import ChatWindow from "./ChatWindow";
+import Footer from "./Footer";
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import TitleBar from "./TitleBar";
 
 const App = () => {
     const [messageArray, setMessageArray] = useState("");
@@ -71,6 +73,7 @@ const App = () => {
                 </div>
                 <div className="col vh-100 p-0">
                     <div className="row overflow-auto m-0 h-75">
+                        <TitleBar />
                         <ChatWindow messageArray={messageArray} />
                     </div>
                     <div className="row m-0 h-25">
@@ -78,6 +81,8 @@ const App = () => {
                             submitMessage={submitMessage}
                             chatMessage={chatMessage}
                             setChatMessage={setChatMessage}
+                        />
+                        <Footer
                             user={user}
                             showSignInModal={showSignInModal}
                             hideSignInModal={hideSignInModal}
