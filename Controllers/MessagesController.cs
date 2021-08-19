@@ -21,6 +21,16 @@ namespace ChatApp.Controllers
             messages.Add(new Message { MessageId = 3, UserName = "Jill", Content = "Worddddd Up dawg" });
             messages.Add(new Message { MessageId = 4, UserName = "Zach", Content = "How's it poppin" });
             messages.Add(new Message { MessageId = 5, UserName = "Kate", Content = "My man!" });
+            messages.Add(new Message { MessageId = 6, UserName = "Nate", Content = "HEY HEY" });
+            messages.Add(new Message { MessageId = 7, UserName = "Eryn", Content = "What's Up" });
+            messages.Add(new Message { MessageId = 8, UserName = "Jill", Content = "Worddddd Up dawg" });
+            messages.Add(new Message { MessageId = 9, UserName = "Zach", Content = "How's it poppin" });
+            messages.Add(new Message { MessageId = 10, UserName = "Kate", Content = "My man!" });
+            messages.Add(new Message { MessageId = 11, UserName = "Nate", Content = "HEY HEY" });
+            messages.Add(new Message { MessageId = 12, UserName = "Eryn", Content = "What's Up" });
+            messages.Add(new Message { MessageId = 13, UserName = "Jill", Content = "Worddddd Up dawg" });
+            messages.Add(new Message { MessageId = 14, UserName = "Zach", Content = "How's it poppin" });
+            messages.Add(new Message { MessageId = 15, UserName = "Kate", Content = "My man!" });
         }
 
         // GET: api/messages

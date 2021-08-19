@@ -72,7 +72,7 @@ const App = () => {
                     <FriendsSideBar otherUsersArray={otherUsersArray} />
                 </div>
                 <div className="col vh-100 p-0">
-                    <div className="row overflow-auto m-0 h-75">
+                    <div className="col overflow-auto m-0 h-75">
                         <TitleBar />
                         <ChatWindow messageArray={messageArray} />
                     </div>
