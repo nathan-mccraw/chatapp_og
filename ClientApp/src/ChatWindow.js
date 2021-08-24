@@ -2,10 +2,6 @@ import React from "react";
 
 const ChatWindow = ({ messageArray }) => {
     return (
-       // <div className="container d-flex flex-column">
-            /*<div className="row h4 m-0 pt-3 pb-3 border-bottom justify-content-center">
-        Chat Title
-      </div>*/
             <div className="row flex-grow-1 m-4 p-4 pt-0 pb-0 border border-3 border-secondary rounded shadow">
                 <div className="col">
                     {messageArray &&
