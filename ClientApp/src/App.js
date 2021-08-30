@@ -15,9 +15,9 @@ const App = () => {
         isSignInOpen: true,
         isRegisterOpen: false,
         showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false}) },
-        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false }) },
+        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
         showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true }) },
-        hideRegisterModal: function () { setModalStates({ ...modalStates, isRegisterOpen: false }) },
+        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
     });
 
     const [formState, setFormState] = useState({
@@ -68,6 +68,13 @@ const App = () => {
 
     const signIn = (e) => {
         e.preventDefault();
+        console.log("Sign In");
+        console.log(formState);
+    };
+
+    const registerNewUser = (e) => {
+        e.preventDefault();
+        console.log("Register New User");
         console.log(formState);
     };
 
@@ -91,6 +98,7 @@ const App = () => {
                         <Footer
                             user={user}
                             signIn={signIn}
+                            registerNewUser={registerNewUser}
                             modalStates={modalStates}
                             formState={formState}
                             formChange={formChange}

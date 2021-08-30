@@ -36,33 +36,21 @@ const SignInModal = ({ formState, signIn, formChange, showRegisterModal }) => {
                         />
                     </div>
                 </div>
-                <div className="row align-items-baseline">
-                    <div className="col-auto pe-0">
-                        <label className="form-check-label" htmlFor="NewUser">
-                            New User?
-                        </label>
-                    </div>
-                    <div className="col-auto">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={formState.newUser}
-                            onChange={formChange}
-                            name="newUser"
-                            id="NewUser"
-                        />
-                    </div>
-                </div>
                 <div className="row justify-content-center">
                     <div className="col-auto mb-4">
-                        <button type="submit" className="btn btn-outline-success">
+                        <button type="submit" className="btn btn-success">
                             Sign In
                         </button>
                     </div>
                 </div>
-                <div className="row justify-content-center mb-0 pb-0 mt-4 pt-4 h6 text-primary">
-                    <button type="button" className="btn btn-outline-success" onClick={showRegisterModal}>
-                        Register
+                <div className="row justify-content-center mb-0 pb-0 mt-4 pt-4 h6">
+                    <div className="row justify-content-center">
+                        <div className="col-auto">
+                            Click off form to chat as guest
+                        </div>
+                    </div>
+                    <button type="button" className="btn btn-outline-primary border-0" onClick={showRegisterModal}>
+                        Register As New User
                     </button>
                 </div>
             </form>

@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import RegisterModal from "./RegisterModal";
 import SignInModal from "./SignInModal";
 
-const Footer = ({ user, signIn, modalStates, formState, formChange }) => {
+const Footer = ({ user, signIn, registerNewUser, modalStates, formState, formChange }) => {
     return (
         <div className="row mt4 justify-content-center align-items-baseline">
             <div className="col-auto p-1">sending message as:</div>
@@ -40,7 +40,7 @@ const Footer = ({ user, signIn, modalStates, formState, formChange }) => {
                     <h3>Register New User</h3>
                 </Modal.Header>
                 <Modal.Body>
-                    <RegisterModal signIn={signIn} formState={formState} formChange={formChange} showSignInModal={modalStates.showSignInModal} />
+                    <RegisterModal registerNewUser={registerNewUser} formState={formState} formChange={formChange} showSignInModal={modalStates.showSignInModal} />
                 </Modal.Body>
             </Modal>
         </div>
