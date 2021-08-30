@@ -11,12 +11,28 @@ const App = () => {
     const [messageArray, setMessageArray] = useState("");
     const [otherUsersArray, setOtherUsersArray] = useState("");
     const [chatMessage, setChatMessage] = useState("");
-    const [IsSignInModalOpen, setIsSignInModalOpen] = useState(true);
+    const [modalStates, setModalStates] = useState({
+        isSignInOpen: true,
+        isRegisterOpen: false,
+        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false}) },
+        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false }) },
+        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true }) },
+        hideRegisterModal: function () { setModalStates({ ...modalStates, isRegisterOpen: false }) },
+    });
+
     const [formState, setFormState] = useState({
         userName: "",
         userPassword: "",
         newUser: false,
+        formChange: function (e) {
+            if (e.target.type === 'checkbox') {
+                setFormState({ ...formState, [e.target.name]: e.target.checked });
+            } else {
+                setFormState({ ...formState, [e.target.name]: e.target.value });
+            }
+        },
     });
+
     const [user, setUser] = useState({
         userId: "1",
         userName: "Guest",
@@ -36,9 +52,6 @@ const App = () => {
         });
     }, []);
 
-    const showSignInModal = () => setIsSignInModalOpen(true);
-    const hideSignInModal = () => setIsSignInModalOpen(false);
-
     const submitMessage = (e) => {
         e.preventDefault();
         const message = {
@@ -55,14 +68,6 @@ const App = () => {
     const signIn = (e) => {
         e.preventDefault();
         console.log(formState);
-    };
-
-    const formChange = (e) => {
-        if (e.target.type === 'checkbox') {
-            setFormState({ ...formState, [e.target.name]: e.target.checked });
-        } else {
-            setFormState({ ...formState, [e.target.name]: e.target.value });
-        }
     };
 
     return (
@@ -84,12 +89,9 @@ const App = () => {
                         />
                         <Footer
                             user={user}
-                            showSignInModal={showSignInModal}
-                            hideSignInModal={hideSignInModal}
-                            IsSignInModalOpen={IsSignInModalOpen}
-                            formState={formState}
-                            formChange={formChange}
                             signIn={signIn}
+                            modalStates={modalStates}
+                            formState={formState}
                         />
                     </div>
                 </div>
