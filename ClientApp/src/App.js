@@ -24,13 +24,6 @@ const App = () => {
         userName: "",
         userPassword: "",
         newUser: false,
-        formChange: function (e) {
-            if (e.target.type === 'checkbox') {
-                setFormState({ ...formState, [e.target.name]: e.target.checked });
-            } else {
-                setFormState({ ...formState, [e.target.name]: e.target.value });
-            }
-        },
     });
 
     const [user, setUser] = useState({
@@ -41,6 +34,14 @@ const App = () => {
         lastName: "Guest",
         DateCreated: "08/07/2021",
     });
+
+    const formChange = (e) => {
+        if (e.target.type === 'checkbox') {
+            setFormState({ ...formState, [e.target.name]: e.target.checked });
+        } else {
+            setFormState({ ...formState, [e.target.name]: e.target.value });
+        }
+    }
 
     useEffect(() => {
         axios.get("/api/users").then((response) => {
@@ -92,6 +93,7 @@ const App = () => {
                             signIn={signIn}
                             modalStates={modalStates}
                             formState={formState}
+                            formChange={formChange}
                         />
                     </div>
                 </div>

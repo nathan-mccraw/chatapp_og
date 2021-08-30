@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-const registerModal = () => {
+const RegisterModal = (signIn, formState, formChange, showSignInModal) => {
     return (
         <div>
             <form action="submit" onSubmit={signIn}>
@@ -59,10 +59,14 @@ const registerModal = () => {
                         </button>
                     </div>
                 </div>
+                <div className="row justify-content-center mb-0 pb-0 mt-4 pt-4 h6 text-primary">
+                    <button type="button" className="btn btn-outline-success" onClick={showSignInModal}>
+                        Sign In
+                    </button>
+                </div>
             </form>
         </div>
     )
 }
 
-export default registerModal;
-
+export default RegisterModal;
