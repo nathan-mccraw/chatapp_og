@@ -14,7 +14,7 @@ const App = () => {
     const [modalStates, setModalStates] = useState({
         isSignInOpen: true,
         isRegisterOpen: false,
-        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false}) },
+        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false }) },
         hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
         showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true }) },
         hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
@@ -48,21 +48,28 @@ const App = () => {
             setOtherUsersArray(response.data);
         });
 
-        axios.get("/api/messages").then((response) => {
-            setMessageArray(response.data);
-        });
+//        axios.get("/api/messages").then((response) => {
+  //          setMessageArray(response.data);
+    //    });
     }, []);
 
     const submitMessage = (e) => {
         e.preventDefault();
         const message = {
-            messageId: Math.floor(Math.random() * 1000),
-            userId: user.userId,
-            userName: user.userName,
-            content: chatMessage,
+            MessageId: Math.floor(Math.random() * 1000),
+            UserId: user.userId,
+            UserName: user.userName,
+            Content: chatMessage,
+            DateCreated: new Date(),
         };
-        axios.post("/api/messages", message)
+
+        console.log(message);
+
+        //       axios.post("/api/messages", message)
         setMessageArray(() => [...messageArray, message]);
+        //       axios.get("/api/messages").then((response) => {
+        //           setMessageArray(response.data);
+        //       });
         setChatMessage("");
     };
 
