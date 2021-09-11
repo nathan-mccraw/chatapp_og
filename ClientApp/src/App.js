@@ -48,9 +48,9 @@ const App = () => {
             setOtherUsersArray(response.data);
         });
 
-//        axios.get("/api/messages").then((response) => {
-  //          setMessageArray(response.data);
-    //    });
+        axios.get("/api/messages").then((response) => {
+            setMessageArray(response.data);
+        });
     }, []);
 
     const submitMessage = (e) => {
@@ -63,13 +63,11 @@ const App = () => {
             DateCreated: new Date(),
         };
 
-        console.log(message);
-
-        //       axios.post("/api/messages", message)
+        axios.post("/api/messages", message);
         setMessageArray(() => [...messageArray, message]);
-        //       axios.get("/api/messages").then((response) => {
-        //           setMessageArray(response.data);
-        //       });
+        axios.get("/api/messages").then((response) => {
+            setMessageArray(response.data);
+        });
         setChatMessage("");
     };
 

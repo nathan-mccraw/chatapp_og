@@ -42,6 +42,7 @@ namespace ChatApp.Controllers
         public void Post(User value)
         {
             users.Add(value);
+            Console.WriteLine(value.UserName);
         }
 
         // DELETE api/<UsersController>/5

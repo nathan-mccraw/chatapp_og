@@ -52,7 +52,7 @@ namespace ChatApp.Controllers
         public void Post(Message value)
         {
             messages.Add(value);
-            Console.WriteLine(value);
+            Console.WriteLine(value.Content);
         }
 
         // DELETE api/Messages/5
