@@ -12,26 +12,36 @@ namespace ChatApp
 {
     public class Program
     {
-
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            Console.WriteLine("in main");
 
-            var cs = "Host=localhost;Username=postgres;Password=N*t3J*ll;Database=testtable";
+            var connectionString = "Host=localhost; Port=5432; User id=postgres; Password='N*t3J*ll'; Database='chat_app'";
 
-            using var con = new NpgsqlConnection(cs);
-            con.Open();
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
 
             string sql = "SELECT * FROM testtable";
-            using var cmd = new NpgsqlCommand(sql, con);
+            using var command = new NpgsqlCommand(sql, connection);
 
-            using NpgsqlDataReader rdr = cmd.ExecuteReader();
+            using NpgsqlDataReader reader = command.ExecuteReader();
 
-            while (rdr.Read())
+            if (reader.HasRows)
             {
-                Console.WriteLine("{0} {1} {2}", rdr.GetInt32(0), rdr.GetString(1),
-                        rdr.GetInt32(2));
+                Console.WriteLine("Has Rows");
+
+                while (reader.Read())
+                {
+                    Console.WriteLine("{0} {1} {2}", reader.GetInt32(0), reader.GetString(1),
+                            reader.GetString(2));
+                }
             }
+            else
+            {
+                Console.WriteLine("Nothing found");
+            }
+
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
