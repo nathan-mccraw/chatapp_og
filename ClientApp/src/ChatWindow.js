@@ -11,7 +11,7 @@ const ChatWindow = ({ messageArray }) => {
                         <div className="row align-items-baseline m-3" key={message.messageId}>
                             <div className="col-auto ms-4">{message.userName}: </div>
                             <div className="col text-light bg-info me-1 ms-1 p-1 ps-2 pe-3 shadow border border-dark rounded">
-                                {message.content}
+                                {message.text}
                             </div>
                             {/*<div*/}
                             {/*    className="col-auto fw-lighter"*/}

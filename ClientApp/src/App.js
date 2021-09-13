@@ -58,8 +58,7 @@ const App = () => {
         const message = {
             MessageId: Math.floor(Math.random() * 1000),
             UserId: user.userId,
-            UserName: user.userName,
-            Content: chatMessage,
+            Text: chatMessage,
             DateCreated: new Date(),
         };
 

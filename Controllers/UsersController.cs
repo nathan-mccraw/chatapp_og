@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Npgsql;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,21 +13,42 @@ namespace ChatApp.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private List<User> users = new List<User>();
+        private List<User> _users = new List<User>();
 
         public UsersController()
         {
-            users.Add(new User { FirstName = "Nathan", LastName = "McCraw", UserName = "Nate", UserId = 1 });
-            users.Add(new User { FirstName = "Jill", LastName = "McCraw", UserName = "Jill", UserId = 2 });
-            users.Add(new User { FirstName = "Kathryn", LastName = "Blohm", UserName = "Kate", UserId = 3 });
-            users.Add(new User { FirstName = "Zachary", LastName = "McCraw", UserName = "Zach", UserId = 4 });
-            users.Add(new User { FirstName = "Eryn", LastName = "McCraw", UserName = "Eryn", UserId = 5 });
         }
 
         // GET: api/<MessagesController>
         [HttpGet]
         public List<User> Get()
         {
+            var connectionString = "Host=localhost; Port=5432; Username=postgres; Password='N*t3J*ll'; Database='chat_app'";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            string usersFromDatabase = "SELECT * FROM users";
+            using var usersCommand = new NpgsqlCommand(usersFromDatabase, connection);
+
+            using NpgsqlDataReader usersReader = usersCommand.ExecuteReader();
+
+            var users = new List<User>();
+
+            if (usersReader.HasRows)
+            {
+                Console.WriteLine("sending users");
+
+                while (usersReader.Read())
+                {
+                    users.Add(new User { UserId = usersReader.GetInt32(0), UserName = usersReader.GetString(1), FirstName = usersReader.GetString(2), LastName = usersReader.GetString(3), DateCreated = usersReader.GetDateTime(4) });
+                }
+            }
+            else
+            {
+                Console.WriteLine("No messages found");
+            }
+            connection.Close();
             return users;
         }
 
@@ -34,14 +56,14 @@ namespace ChatApp.Controllers
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return users.Where(x => x.UserId == id).FirstOrDefault();
+            return _users.Where(x => x.UserId == id).FirstOrDefault();
         }
 
         // POST api/<MessagesController>
         [HttpPost]
         public void Post(User value)
         {
-            users.Add(value);
+            _users.Add(value);
             Console.WriteLine(value.UserName);
         }
 
