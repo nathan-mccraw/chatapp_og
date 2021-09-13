@@ -19,13 +19,11 @@ const App = () => {
         showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true }) },
         hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
     });
-
     const [formState, setFormState] = useState({
         userName: "",
         userPassword: "",
         newUser: false,
     });
-
     const [user, setUser] = useState({
         userId: "1",
         userName: "Guest",
@@ -34,14 +32,6 @@ const App = () => {
         lastName: "Guest",
         DateCreated: "08/07/2021",
     });
-
-    const formChange = (e) => {
-        if (e.target.type === 'checkbox') {
-            setFormState({ ...formState, [e.target.name]: e.target.checked });
-        } else {
-            setFormState({ ...formState, [e.target.name]: e.target.value });
-        }
-    }
 
     useEffect(() => {
         axios.get("/api/users").then((response) => {
@@ -53,14 +43,24 @@ const App = () => {
         });
     }, []);
 
+    const formChange = (e) => {
+        if (e.target.type === 'checkbox') {
+            setFormState({ ...formState, [e.target.name]: e.target.checked });
+        } else {
+            setFormState({ ...formState, [e.target.name]: e.target.value });
+        }
+    }
+
     const submitMessage = (e) => {
         e.preventDefault();
         const message = {
-            MessageId: Math.floor(Math.random() * 1000),
-            UserId: user.userId,
-            Text: chatMessage,
-            DateCreated: new Date(),
+            messageId: Math.floor(Math.random() * 1000),
+            userId: user.userId,
+            text: chatMessage,
+            dateCreated: new Date(),
         };
+
+        console.log(message.DateCreated);
 
         axios.post("/api/messages", message);
         setMessageArray(() => [...messageArray, message]);
