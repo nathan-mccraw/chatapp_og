@@ -33,7 +33,7 @@ namespace ChatApp.Controllers
 
             using NpgsqlDataReader usersReader = usersCommand.ExecuteReader();
 
-            var users = new List<User>();
+            //var users = new List<User>();
 
             if (usersReader.HasRows)
             {
@@ -41,7 +41,7 @@ namespace ChatApp.Controllers
 
                 while (usersReader.Read())
                 {
-                    users.Add(new User { UserId = usersReader.GetInt32(0), UserName = usersReader.GetString(1), FirstName = usersReader.GetString(2), LastName = usersReader.GetString(3), DateCreated = usersReader.GetDateTime(4) });
+                    _users.Add(new User { UserId = usersReader.GetInt32(0), UserName = usersReader.GetString(1), FirstName = usersReader.GetString(2), LastName = usersReader.GetString(3), DateCreated = usersReader.GetDateTime(4) });
                 }
             }
             else
@@ -49,7 +49,7 @@ namespace ChatApp.Controllers
                 Console.WriteLine("No messages found");
             }
             connection.Close();
-            return users;
+            return _users;
         }
 
         // GET api/<MessagesController>/5

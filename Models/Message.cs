@@ -7,9 +7,10 @@ namespace ChatApp
 {
     public class Message
     {
-        public int MessageId { get; set; }
-        public string Text { get; set; }
-        public int UserId { get; set; }
-        public DateTime DateCreated { get; set; }
+        public virtual int MessageId { get; set; }
+        public virtual string Text { get; set; }
+        public virtual int UserId { get; set; }
+        public virtual string Username { get; set; }
+        public virtual DateTime DateCreated { get; set; }
     }
 }

@@ -2,7 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Npgsql;
+using NHibernate.Cfg;
+using NHibernate.Dialect;
+using NHibernate.Driver;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,15 +37,13 @@ namespace ChatApp.Controllers
 
             using NpgsqlDataReader messagesReader = messagesCommand.ExecuteReader();
 
-            var messages = new List<Message>();
+            //var messages = new List<Message>();
 
             if (messagesReader.HasRows)
             {
-                Console.WriteLine("Message connection open");
-
                 while (messagesReader.Read())
                 {
-                    messages.Add(new Message { MessageId = messagesReader.GetInt32(0), Text = messagesReader.GetString(1), UserId = messagesReader.GetInt32(2), DateCreated = messagesReader.GetDateTime(3) });
+                    _messages.Add(new Message { MessageId = messagesReader.GetInt32(0), Text = messagesReader.GetString(1), UserId = messagesReader.GetInt32(2), DateCreated = messagesReader.GetDateTime(3) });
                 }
             }
             else
@@ -49,8 +51,24 @@ namespace ChatApp.Controllers
                 Console.WriteLine("No messages found");
             }
             connection.Close();
+            connection.Open();
 
-            return messages;
+            _messages.ForEach((message) =>
+           {
+               string userById = "SELECT user_name FROM users WHERE user_id=@userId";
+
+               using var usersCommand = new NpgsqlCommand(userById, connection);
+               int userId = message.UserId;
+               usersCommand.Parameters.AddWithValue("@userId", userId);
+
+               using NpgsqlDataReader usersReader = usersCommand.ExecuteReader();
+               while(usersReader.Read())
+                   message.Username = usersReader.GetString(0);
+           });
+
+            connection.Close();
+
+            return _messages;
         }
 
         // GET api/Messages/5
