@@ -62,7 +62,7 @@ namespace ChatApp.Controllers
                usersCommand.Parameters.AddWithValue("@userId", userId);
 
                using NpgsqlDataReader usersReader = usersCommand.ExecuteReader();
-               while(usersReader.Read())
+               while (usersReader.Read())
                    message.Username = usersReader.GetString(0);
            });
 
@@ -80,10 +80,21 @@ namespace ChatApp.Controllers
 
         // POST api/Messages
         [HttpPost]
-        public void Post(Message value)
+        public void Post(Message postedMessage)
         {
-            _messages.Add(value);
-            Console.WriteLine(value.Text);
+            var connectionString = "Host=localhost; Port=5432; Username=postgres; Password='N*t3J*ll'; Database='chat_app'";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            string addMessageToDB = "SELECT * FROM messages";
+            using var addMessageCommand = new NpgsqlCommand(addMessageToDB, connection);
+
+            using NpgsqlDataReader messagesReader = addMessageCommand.ExecuteReader();
+
+            connection.Close();
+
+            _messages.Add(postedMessage);
         }
 
         // DELETE api/Messages/5
