@@ -26,13 +26,8 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var messages = session.Query<Message>();
-                foreach (var message in messages)
-                {
-                    UserEntity user = session.Get<UserEntity>(message.UserId);
-                    message.Username = user.UserName;
-                }
-                return messages.ToList();
+                var messageEntities = session.Query<MessageEntity>();
+                return messageEntities.Select(message => new Message(message)).ToList();
             };
         }
 

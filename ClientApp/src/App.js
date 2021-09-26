@@ -63,7 +63,6 @@ const App = () => {
         console.log(message);
 
         axios.post("/api/messages", message);
-        setMessageArray(() => [...messageArray, message]);
         axios.get("/api/messages").then((response) => {
             setMessageArray(response.data);
         });

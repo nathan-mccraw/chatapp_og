@@ -18,12 +18,12 @@ namespace ChatApp.Controllers
             var _sessionFactory = sessionFactory;
         }
 
-        //// GET: api/<SignInController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/<SignInController>
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
         //// GET api/SignIn/5
         //[HttpGet("{id}")]
@@ -36,6 +36,7 @@ namespace ChatApp.Controllers
         [HttpPost]
         public void Post([FromBody] string user)
         {
+            Console.WriteLine(user);
         }
 
         //// PUT api/SignIn/5

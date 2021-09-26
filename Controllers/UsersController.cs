@@ -26,13 +26,8 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                List<UserEntity> userEntities = session.Query<UserEntity>().ToList();
-                List<User> users = new List<User>();
-                foreach (var user in userEntities)
-                {
-                    users.Add(new User(user));
-                }
-                return users;
+                var userEntities = session.Query<UserEntity>();
+                return userEntities.Select(user => new User(user)).ToList();
             };
         }
 
@@ -43,8 +38,7 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var userEntity = session.Query<UserEntity>().Where(x => x.UserId == id).FirstOrDefault();
-                User user = new User(userEntity);
-                return user;
+                return new User(userEntity);
             };
         }
 
@@ -66,6 +60,11 @@ namespace ChatApp.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var user = session.Query<User>().Where(x => x.UserId == id).FirstOrDefault();
+                session.Delete(user);
+            };
         }
     }
 }
