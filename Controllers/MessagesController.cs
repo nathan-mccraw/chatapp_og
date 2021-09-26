@@ -27,11 +27,11 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var messages = session.Query<Message>();
-                foreach (var message in messages)
-                {
-                    UserEntity user = session.Get<UserEntity>(message.UserId);
-                    message.Username = user.UserName;
-                }
+                //foreach (var message in messages)
+                //{
+                //    UserEntity user = session.Get<UserEntity>(message.UserId);
+                //    message.Username = user.UserName;
+                //}
                 return messages.ToList();
             };
         }
@@ -43,8 +43,8 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var message = session.Query<Message>().Where(x => x.MessageId == id).FirstOrDefault();
-                UserEntity user = session.Get<UserEntity>(message.UserId);
-                message.Username = user.UserName;
+                //UserEntity user = session.Get<UserEntity>(message.UserId);
+                //message.Username = user.UserName;
                 return message;
             };
         }

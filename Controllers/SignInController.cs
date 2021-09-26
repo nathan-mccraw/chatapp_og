@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NHibernate;
+using ChatApp.Entities;
+using ChatApp.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,9 +15,11 @@ namespace ChatApp.Controllers
     [ApiController]
     public class SignInController : ControllerBase
     {
+        private ISessionFactory _sessionFactory;
+
         public SignInController(ISessionFactory sessionFactory)
         {
-            var _sessionFactory = sessionFactory;
+            _sessionFactory = sessionFactory;
         }
 
         //// GET: api/<SignInController>
@@ -34,8 +38,12 @@ namespace ChatApp.Controllers
 
         // POST api/SignIn
         [HttpPost]
-        public void Post([FromBody] string user)
+        public void Post([FromBody] User user)
         {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var userEntity = session.Query<UserEntity>().Where(x => x.UserName == user.UserName).FirstOrDefault();
+            }
         }
 
         //// PUT api/SignIn/5
