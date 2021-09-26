@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Npgsql;
 using NHibernate;
 using ChatApp.Models;
 using ChatApp.Entities;
@@ -29,7 +26,7 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var userEntities = session.Query<UserEntity>();
+                List<UserEntity> userEntities = session.Query<UserEntity>().ToList();
                 List<User> users = new List<User>();
                 foreach (var user in userEntities)
                 {

@@ -1,13 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Npgsql;
-using NHibernate.Cfg;
-using NHibernate.Dialect;
-using NHibernate.Driver;
-using System.Threading.Tasks;
 using NHibernate;
 using ChatApp.Models;
 using ChatApp.Entities;

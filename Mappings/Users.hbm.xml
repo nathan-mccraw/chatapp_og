@@ -8,9 +8,9 @@
 			<generator class="native" />
 		</id>
 		<property name="UserName" column ="user_name" />
+		<property name="Password" column ="password" />
 		<property name="FirstName" column ="first_name" />
 		<property name="LastName" column ="last_name" />
-		<property name="Password" column ="password" />
 		<property name="DateCreated" column ="date_created" />
 	</class>
 </hibernate-mapping>
