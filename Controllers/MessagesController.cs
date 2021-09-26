@@ -9,6 +9,8 @@ using NHibernate.Dialect;
 using NHibernate.Driver;
 using System.Threading.Tasks;
 using NHibernate;
+using ChatApp.Models;
+using ChatApp.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,7 +36,7 @@ namespace ChatApp.Controllers
                 var messages = session.Query<Message>();
                 foreach (var message in messages)
                 {
-                    User user = session.Get<User>(message.UserId);
+                    UserEntity user = session.Get<UserEntity>(message.UserId);
                     message.Username = user.UserName;
                 }
                 return messages.ToList();
@@ -48,6 +50,8 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var message = session.Query<Message>().Where(x => x.MessageId == id).FirstOrDefault();
+                UserEntity user = session.Get<UserEntity>(message.UserId);
+                message.Username = user.UserName;
                 return message;
             };
         }

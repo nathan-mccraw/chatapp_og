@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Entities
 {
-    public class Message
+    public class MessageEntity
     {
         public virtual int MessageId { get; set; }
         public virtual string Text { get; set; }
