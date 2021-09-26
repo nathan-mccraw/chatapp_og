@@ -1,12 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ChatApp.Entities;
 
 namespace ChatApp.Models
 {
     public class Message
     {
+        public Message(MessageEntity message)
+        {
+            this.MessageId = message.MessageId;
+            this.Text = message.Text;
+            this.User = new User(message.User);
+            this.DateCreated = message.DateCreated;
+        }
+
         public virtual int MessageId { get; set; }
         public virtual string Text { get; set; }
         public virtual User User { get; set; }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="ChatApp"
-                   namespace="ChatApp.Models">
+                   namespace="ChatApp.Entities">
 
-	<class name="Message" table="messages">
+	<class name="MessageEntity" table="messages">
 		<id name="MessageId" column = "messages_id">
 			<generator class="native" />
 		</id>

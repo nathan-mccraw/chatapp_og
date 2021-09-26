@@ -26,23 +26,23 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var messages = session.Query<Message>();
-                //foreach (var message in messages)
-                //{
-                //    UserEntity user = session.Get<UserEntity>(message.UserId);
-                //    message.Username = user.UserName;
-                //}
-                return messages.ToList();
+                List<MessageEntity> messageEntities = session.Query<MessageEntity>().ToList();
+                List<Message> messages = new List<Message>();
+                foreach (var message in messageEntities)
+                {
+                    messages.Add(new Message(message));
+                }
+                return messages;
             };
         }
 
         // GET api/Messages/5
         [HttpGet("{id}")]
-        public Message Get(int id)
+        public MessageEntity Get(int id)
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var message = session.Query<Message>().Where(x => x.MessageId == id).FirstOrDefault();
+                var message = session.Query<MessageEntity>().Where(x => x.MessageId == id).FirstOrDefault();
                 //UserEntity user = session.Get<UserEntity>(message.UserId);
                 //message.Username = user.UserName;
                 return message;
