@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="ChatApp"
-                   namespace="ChatApp.Models">
+                   namespace="ChatApp">
 
-	<class name="Message">
-		<id name="MessageId">
-			<generator class="int" />
+	<class name="Message" table="messages">
+		<id name="MessageId" column = "messages_id">
+			<generator class="native" />
 		</id>
-		<property name="Text" />
-		<property name="UserId" />
-		<property name="UserName" />
-		<property name="DateCreated" />
+		<property name="Text" column = "text" />
+		<property name="UserId" column ="user_id" />
+		<property name="DateCreated" column ="date_created" />
 	</class>
 </hibernate-mapping>

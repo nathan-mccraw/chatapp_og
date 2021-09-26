@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using NHibernate.NetCore;
 
 namespace ChatApp
 {
@@ -19,8 +21,12 @@ namespace ChatApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
+            var path = System.IO.Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory,
+            "nhibernate.cfg.xml"
+           );
+            services.AddHibernate(path);
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

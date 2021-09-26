@@ -60,7 +60,7 @@ const App = () => {
             dateCreated: new Date(),
         };
 
-        console.log(message.DateCreated);
+        console.log(message);
 
         axios.post("/api/messages", message);
         setMessageArray(() => [...messageArray, message]);

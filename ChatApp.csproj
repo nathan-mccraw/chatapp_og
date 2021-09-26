@@ -14,6 +14,7 @@
     <PackageReference Include="bootstrap" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.8" />
     <PackageReference Include="NHibernate" Version="5.3.9" />
+    <PackageReference Include="NHibernate.NetCore" Version="5.0.10" />
     <PackageReference Include="Npgsql" Version="5.0.7" />
   </ItemGroup>
 
@@ -25,7 +26,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Mappings\Messages.hbm.xml" />
+    <None Remove="Mappings\Users.hbm.xml" />
+    <None Remove="nhibernate.cfg.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Messages.hbm.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\Users.hbm.xml" />
+    <EmbeddedResource Include="nhibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\components\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

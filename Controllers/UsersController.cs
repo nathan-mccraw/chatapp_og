@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Npgsql;
+using NHibernate;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,58 +14,47 @@ namespace ChatApp.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private List<User> _users = new List<User>();
+        private ISessionFactory _sessionFactory;
 
-        public UsersController()
+        public UsersController(ISessionFactory sessionFactory)
         {
+            _sessionFactory = sessionFactory;
         }
 
-        // GET: api/<MessagesController>
+        // GET: api/<UsersController>
         [HttpGet]
         public List<User> Get()
         {
-            var connectionString = "Host=localhost; Port=5432; Username=postgres; Password='N*t3J*ll'; Database='chat_app'";
-
-            using var connection = new NpgsqlConnection(connectionString);
-            connection.Open();
-
-            string usersFromDatabase = "SELECT * FROM users";
-            using var usersCommand = new NpgsqlCommand(usersFromDatabase, connection);
-
-            using NpgsqlDataReader usersReader = usersCommand.ExecuteReader();
-
-            //var users = new List<User>();
-
-            if (usersReader.HasRows)
+            using (var session = _sessionFactory.OpenSession())
             {
-                Console.WriteLine("sending users");
-
-                while (usersReader.Read())
-                {
-                    _users.Add(new User { UserId = usersReader.GetInt32(0), UserName = usersReader.GetString(1), FirstName = usersReader.GetString(2), LastName = usersReader.GetString(3), DateCreated = usersReader.GetDateTime(4) });
-                }
-            }
-            else
-            {
-                Console.WriteLine("No messages found");
-            }
-            connection.Close();
-            return _users;
+                var users = session.Query<User>();
+                return users.ToList();
+            };
         }
 
-        // GET api/<MessagesController>/5
+        // GET: api/<UsersController>/5
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return _users.Where(x => x.UserId == id).FirstOrDefault();
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var users = session.Query<User>().Where(x => x.UserId == id).FirstOrDefault();
+                return users;
+            };
         }
 
-        // POST api/<MessagesController>
+        // POST: api/<UsersController>
         [HttpPost]
         public void Post(User value)
         {
-            _users.Add(value);
-            Console.WriteLine(value.UserName);
+            using (var session = _sessionFactory.OpenSession())
+            {
+                using (var transmit = session.BeginTransaction())
+                {
+                    session.Save(value);
+                    transmit.Commit();
+                }
+            };
         }
 
         // DELETE api/<UsersController>/5
