@@ -33,13 +33,13 @@ namespace ChatApp.Controllers
 
         // GET api/Messages/5
         [HttpGet("{id}")]
-        public Message Get(int id)
+        public MessageEntity Get(int id)
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var message = session.Query<Message>().Where(x => x.MessageId == id).FirstOrDefault();
-                UserEntity user = session.Get<UserEntity>(message.UserId);
-                message.Username = user.UserName;
+                var message = session.Query<MessageEntity>().Where(x => x.MessageId == id).FirstOrDefault();
+                //UserEntity user = session.Get<UserEntity>(message.UserId);
+                //message.Username = user.UserName;
                 return message;
             };
         }
