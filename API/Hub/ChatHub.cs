@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
+using ChatApp.API.Hub.Client;
 using ChatApp.Models;
+using Microsoft.AspNetCore.SignalR;
 
-namespace ChatApp
+namespace ChatApp.Api.Hub
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub<IChatClient>
     {
-        public async Task SendMessage(Message message)
-        {
-            await Clients.All.SendAsync("RecieveMessage", message);
-        }
+        //public async Task SendMessage(ChatMessage message)
+        //{
+        //    Console.WriteLine(message);
+        //    await Clients.All.ReceiveMessage(message);
+        //}
     }
 }

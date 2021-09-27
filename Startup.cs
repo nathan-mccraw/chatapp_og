@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using NHibernate.NetCore;
-using Microsoft.AspNetCore.SignalR;
+using ChatApp.Api.Hub;
 
 namespace ChatApp
 {
@@ -56,10 +56,10 @@ namespace ChatApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
 
             app.UseSpa(spa =>

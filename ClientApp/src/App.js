@@ -4,10 +4,12 @@ import ChatWindow from "./ChatWindow";
 import Footer from "./Footer";
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TitleBar from "./TitleBar";
+import * as signalR from '@microsoft/signalr';
 
 const App = () => {
+    const [connection, setConnection] = useState(null);
     const [messageArray, setMessageArray] = useState("");
     const [otherUsersArray, setOtherUsersArray] = useState("");
     const [chatMessage, setChatMessage] = useState("");
@@ -32,16 +34,36 @@ const App = () => {
         lastName: "Guest",
         DateCreated: "08/07/2021",
     });
+    const latestChat = useRef(null);
+    latestChat.current = messageArray;
 
     useEffect(() => {
-        axios.get("/api/users").then((response) => {
-            setOtherUsersArray(response.data);
-        });
+        const newConnection = new signalR.HubConnectionBuilder().withUrl("/chathub").withAutomaticReconnect().build();
+        setConnection(newConnection);
+        //axios.get("/api/users").then((response) => {
+        //    setOtherUsersArray(response.data);
+        //});
 
-        axios.get("/api/messages").then((response) => {
-            setMessageArray(response.data);
-        });
+        //axios.get("/api/messages").then((response) => {
+        //    setMessageArray(response.data);
+        //});
     }, []);
+
+    useEffect(() => {
+        if (connection) {
+            connection.start()
+                .then(result => {
+                    console.log('Good Connection');
+                    connection.on('ReceiveMessage', (message) => {
+                        console.log("receiving message");
+                        const updatedChat = [...latestChat.current];
+                        updatedChat.push(message);
+                        setMessageArray(updatedChat);
+                    });
+                })
+                .catch(e => console.log(e));
+        }
+    }, [connection]);
 
     const formChange = (e) => {
         if (e.target.type === 'checkbox') {
@@ -51,21 +73,34 @@ const App = () => {
         }
     }
 
-    const submitMessage = (e) => {
+    const submitMessage = async (e) => {
         e.preventDefault();
         const message = {
-            messageId: Math.floor(Math.random() * 1000),
-            userId: user.userId,
+            // userId: user.userId,
+            userName: "Nate",
             text: chatMessage,
-            dateCreated: new Date(),
+            // dateCreated: new Date(),
         };
 
+        console.log("message:");
         console.log(message);
 
-        axios.post("/api/messages", message);
-        axios.get("/api/messages").then((response) => {
-            setMessageArray(response.data);
-        });
+        if (connection.connectionStarted) {
+            try {
+                axios.post("/api/messages", message);
+                // await connection.send("SendMessage", message);
+                console.log("message sent");
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log('No connection to server');
+        }
+        //connection.invoke("SendMessage", message);
+        //axios.post("/api/messages", message);
+        //axios.get("/api/messages").then((response) => {
+        //    setMessageArray(response.data);
+        //});
         setChatMessage("");
     };
 
