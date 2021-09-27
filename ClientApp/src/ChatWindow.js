@@ -8,8 +8,8 @@ const ChatWindow = ({ messageArray }) => {
             <div className="col">
                 {messageArray &&
                     messageArray.map((message) => (
-                        <ChatMessageTest message={message} />
-                        //<Message key={message.messageId} message={message} messageArray={messageArray} />
+                        //<ChatMessageTest message={message} />
+                        <Message key={message.messageId} message={message} messageArray={messageArray} />
                     ))}
             </div>
         </div>

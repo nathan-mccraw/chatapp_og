@@ -9,11 +9,5 @@ using Microsoft.AspNetCore.SignalR;
 namespace ChatApp.Api.Hub
 {
     public class ChatHub : Hub<IChatClient>
-    {
-        //public async Task SendMessage(ChatMessage message)
-        //{
-        //    Console.WriteLine(message);
-        //    await Clients.All.ReceiveMessage(message);
-        //}
-    }
+    { }
 }

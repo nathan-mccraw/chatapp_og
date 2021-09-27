@@ -28,11 +28,10 @@ const App = () => {
     });
     const [user, setUser] = useState({
         userId: "1",
-        userName: "Guest",
-        password: "",
-        firstName: "Guest",
-        lastName: "Guest",
-        DateCreated: "08/07/2021",
+        userName: "mobellO",
+        firstName: "Millisent",
+        lastName: "Obell",
+        DateCreated: "2021-09-24T00:28:21",
     });
     const latestChat = useRef(null);
     latestChat.current = messageArray;
@@ -40,13 +39,13 @@ const App = () => {
     useEffect(() => {
         const newConnection = new signalR.HubConnectionBuilder().withUrl("/chathub").withAutomaticReconnect().build();
         setConnection(newConnection);
-        //axios.get("/api/users").then((response) => {
-        //    setOtherUsersArray(response.data);
-        //});
+        axios.get("/api/users").then((response) => {
+            setOtherUsersArray(response.data);
+        });
 
-        //axios.get("/api/messages").then((response) => {
-        //    setMessageArray(response.data);
-        //});
+        axios.get("/api/messages").then((response) => {
+            setMessageArray(response.data);
+        });
     }, []);
 
     useEffect(() => {
@@ -76,10 +75,9 @@ const App = () => {
     const submitMessage = async (e) => {
         e.preventDefault();
         const message = {
-            // userId: user.userId,
-            userName: "Nate",
             text: chatMessage,
-            // dateCreated: new Date(),
+            user: user,
+            dateCreated: new Date(),
         };
 
         console.log("message:");
@@ -88,7 +86,6 @@ const App = () => {
         if (connection.connectionStarted) {
             try {
                 axios.post("/api/messages", message);
-                // await connection.send("SendMessage", message);
                 console.log("message sent");
             } catch (error) {
                 console.log(error);
@@ -96,11 +93,6 @@ const App = () => {
         } else {
             console.log('No connection to server');
         }
-        //connection.invoke("SendMessage", message);
-        //axios.post("/api/messages", message);
-        //axios.get("/api/messages").then((response) => {
-        //    setMessageArray(response.data);
-        //});
         setChatMessage("");
     };
 

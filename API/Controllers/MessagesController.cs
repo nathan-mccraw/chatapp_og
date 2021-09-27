@@ -44,8 +44,6 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var message = session.Query<MessageEntity>().Where(x => x.MessageId == id).FirstOrDefault();
-                //UserEntity user = session.Get<UserEntity>(message.UserId);
-                //message.Username = user.UserName;
                 return message;
             };
         }
@@ -54,14 +52,14 @@ namespace ChatApp.Controllers
         [HttpPost]
         public async Task Post(ChatMessage postedMessage)
         {
-            //using (var session = _sessionFactory.OpenSession())
-            //{
-            //    using (var transmit = session.BeginTransaction())
-            //    {
-            //        session.Save(postedMessage);
-            //        transmit.Commit();
-            //    }
-            //};
+            using (var session = _sessionFactory.OpenSession())
+            {
+                using (var transmit = session.BeginTransaction())
+                {
+                    session.Save(postedMessage);
+                    transmit.Commit();
+                }
+            };
 
             await _chatHub.Clients.All.ReceiveMessage(postedMessage);
         }
