@@ -29,28 +29,16 @@ namespace ChatApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        //// GET api/SignIn/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST api/SignIn
         [HttpPost]
-        public void Post([FromBody] User user)
+        public void Post([FromBody] UserLogin user)
         {
-            using (var session = _sessionFactory.OpenSession())
-            {
-                var userEntity = session.Query<UserEntity>().Where(x => x.UserName == user.UserName).FirstOrDefault();
-            }
+            Console.WriteLine(user.userName);
+            //using (var session = _sessionFactory.OpenSession())
+            //{
+            //    var userEntity = session.Query<UserEntity>().Where(x => x.UserName == user.UserName).FirstOrDefault();
+            //}
         }
-
-        //// PUT api/SignIn/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
 
         // DELETE api/SignIn/5
         [HttpDelete("{id}")]
