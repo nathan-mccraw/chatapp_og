@@ -14,6 +14,15 @@ namespace ChatApp.Models
             this.DateCreated = userEntity.DateCreated;
         }
 
+        public User(User user)
+        {
+            this.UserId = user.UserId;
+            this.UserName = user.UserName;
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.DateCreated = user.DateCreated;
+        }
+
         public virtual int UserId { get; set; }
         public virtual string UserName { get; set; }
         public virtual string FirstName { get; set; }

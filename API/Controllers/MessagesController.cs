@@ -28,12 +28,13 @@ namespace ChatApp.Controllers
 
         // GET: api/messages
         [HttpGet]
-        public List<Message> Get()
+        public List<MessageEntity> Get()
         {
             using (var session = _sessionFactory.OpenSession())
             {
                 var messageEntities = session.Query<MessageEntity>();
-                return messageEntities.Select(message => new Message(message)).ToList();
+                return messageEntities.ToList();
+                //return messageEntities.Select(message => new Message(message)).ToList();
             };
         }
 
@@ -50,7 +51,7 @@ namespace ChatApp.Controllers
 
         // POST api/Messages
         [HttpPost]
-        public async Task Post(ChatMessage postedMessage)
+        public async Task Post(MessageEntity postedMessage)
         {
             using (var session = _sessionFactory.OpenSession())
             {
