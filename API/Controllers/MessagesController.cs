@@ -6,7 +6,6 @@ using NHibernate;
 using Microsoft.AspNetCore.SignalR;
 using ChatApp.Models;
 using ChatApp.Api.Hub;
-using ChatApp.Entities;
 using ChatApp.API.Hub.Client;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,9 +31,17 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var messageEntities = session.Query<MessageEntity>();
-                return messageEntities.ToList();
-                //return messageEntities.Select(message => new Message(message)).ToList();
+                var messages = session.Query<MessageEntity>();
+                foreach (var message in messages)
+                {
+                    UserEntity user = session.Get<UserEntity>(message.UserId);
+                    message.UserName = user.UserName;
+                }
+                return messages.ToList();
+
+                //var messageEntities = session.Query<MessageEntity>();
+                //return messageEntities.ToList();
+                // return messageEntities.Select(message => new Message(message)).ToList();
             };
         }
 
@@ -71,7 +78,7 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var message = session.Query<Message>().Where(x => x.MessageId == id).FirstOrDefault();
+                var message = session.Query<MessageEntity>().Where(x => x.MessageId == id).FirstOrDefault();
                 session.Delete(message);
             };
         }

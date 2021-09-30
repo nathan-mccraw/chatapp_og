@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ChatApp.Entities;
+using ChatApp.Models;
 
 namespace ChatApp.API.Hub.Client
 {

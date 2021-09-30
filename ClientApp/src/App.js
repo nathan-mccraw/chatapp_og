@@ -76,7 +76,9 @@ const App = () => {
         e.preventDefault();
         const message = {
             text: chatMessage,
-            user: user,
+            //user: user,
+            userId: user.userId,
+            userName: user.userName,
             dateCreated: new Date(),
         };
 

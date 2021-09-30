@@ -89,6 +89,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="API\Entities\" />
     <Folder Include="ClientApp\src\components\" />
   </ItemGroup>
 

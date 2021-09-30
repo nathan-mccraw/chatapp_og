@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 
 const Message = ({ message, messageArray }) => {
-    
     let isNotSameDate = true;
     let index = messageArray.indexOf(message);
     let currentDate = new Date(message.dateCreated);
@@ -22,7 +21,8 @@ const Message = ({ message, messageArray }) => {
                     </div>
                 </div>
             }
-            <div className="col-auto ms-4">{message.user.userName}: </div>
+            {/*<div className="col-auto ms-4">{message.user.userName}: </div>*/}
+            <div className="col-auto ms-4">{message.userName}: </div>
             <div className="col text-light bg-info me-1 ms-1 p-1 ps-2 pe-3 shadow border border-dark rounded">
                 {message.text}
             </div>

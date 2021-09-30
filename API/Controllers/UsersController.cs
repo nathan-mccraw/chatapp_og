@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using ChatApp.Models;
-using ChatApp.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,23 +21,25 @@ namespace ChatApp.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        public List<User> Get()
+        public List<UserEntity> Get()
         {
             using (var session = _sessionFactory.OpenSession())
             {
                 var userEntities = session.Query<UserEntity>();
-                return userEntities.Select(user => new User(user)).ToList();
+                //return userEntities.Select(user => new User(user)).ToList();
+                return userEntities.ToList();
             };
         }
 
         // GET: api/<UsersController>/5
         [HttpGet("{id}")]
-        public User Get(int id)
+        public UserEntity Get(int id)
         {
             using (var session = _sessionFactory.OpenSession())
             {
                 var userEntity = session.Query<UserEntity>().Where(x => x.UserId == id).FirstOrDefault();
-                return new User(userEntity);
+                //return new User(userEntity);
+                return userEntity;
             };
         }
 
@@ -62,7 +63,7 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var user = session.Query<User>().Where(x => x.UserId == id).FirstOrDefault();
+                var user = session.Query<UserEntity>().Where(x => x.UserId == id).FirstOrDefault();
                 session.Delete(user);
             };
         }
