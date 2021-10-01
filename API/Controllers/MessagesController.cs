@@ -27,21 +27,20 @@ namespace ChatApp.Controllers
 
         // GET: api/messages
         [HttpGet]
-        public List<MessageEntity> Get()
+        public List<MessageModel> Get()
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var messages = session.Query<MessageEntity>();
-                foreach (var message in messages)
-                {
-                    UserEntity user = session.Get<UserEntity>(message.UserId);
-                    message.UserName = user.UserName;
-                }
+                var messages = session.Query<MessageEntity>()
+                    .Select(
+                        message => new MessageModel
+                        {
+                            Text = message.Text,
+                            Username = message.User.Username,
+                            DateCreated = message.DateCreated
+                        }
+                    );
                 return messages.ToList();
-
-                //var messageEntities = session.Query<MessageEntity>();
-                //return messageEntities.ToList();
-                // return messageEntities.Select(message => new Message(message)).ToList();
             };
         }
 
@@ -68,8 +67,13 @@ namespace ChatApp.Controllers
                     transmit.Commit();
                 }
             };
-
-            await _chatHub.Clients.All.ReceiveMessage(postedMessage);
+            var outgoingMessage = new MessageModel
+            {
+                Text = postedMessage.Text,
+                Username = postedMessage.User.Username,
+                DateCreated = postedMessage.DateCreated
+            };
+            await _chatHub.Clients.All.ReceiveMessage(outgoingMessage);
         }
 
         // DELETE api/Messages/5

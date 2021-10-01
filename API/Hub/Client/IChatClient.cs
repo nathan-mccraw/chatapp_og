@@ -8,6 +8,6 @@ namespace ChatApp.API.Hub.Client
 {
     public interface IChatClient
     {
-        Task ReceiveMessage(MessageEntity message);
+        Task ReceiveMessage(MessageModel message);
     }
 }

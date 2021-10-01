@@ -28,7 +28,7 @@ const App = () => {
     });
     const [user, setUser] = useState({
         userId: "1",
-        userName: "mobellO",
+        username: "mobellO",
         firstName: "Millisent",
         lastName: "Obell",
         DateCreated: "2021-09-24T00:28:21",
@@ -76,10 +76,7 @@ const App = () => {
         e.preventDefault();
         const message = {
             text: chatMessage,
-            //user: user,
-            userId: user.userId,
-            userName: user.userName,
-            dateCreated: new Date(),
+            user: user,
         };
 
         console.log("message:");
