@@ -9,6 +9,7 @@ using NHibernate.NetCore;
 using ChatApp.Api.Hub;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ChatApp.API.Authentication;
 
 namespace ChatApp
 {
