@@ -28,17 +28,8 @@ namespace ChatApp
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.TokenValidationParameters =
-                        new TokenValidationParameters
-                        {
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidIssuer = "Fiver.Security.Bearer",
-                            ValidAudience = "Fiver.Security.Bearer",
-                            IssuerSigningKey = JwtSecurityKey.Create("fiversecret ")
-                        };
+                    options.Audience = Configuration["AAD:ResourceId"];
+                    options.Authority = $"{Configuration["AAD:InstanceId"]}{Configuration["AAD:TentantId"]}";
                 });
             services.AddControllersWithViews();
             var path = System.IO.Path.Combine(
@@ -58,8 +49,6 @@ namespace ChatApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseAuthentication();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,6 +62,7 @@ namespace ChatApp
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

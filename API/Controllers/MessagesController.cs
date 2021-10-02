@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using ChatApp.Models;
 using ChatApp.Api.Hub;
 using ChatApp.API.Hub.Client;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,8 +33,7 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var messages = session.Query<MessageEntity>()
-                    .Select(
-                        message => new MessageModel
+                    .Select(message => new MessageModel
                         {
                             Text = message.Text,
                             Username = message.User.Username,
@@ -50,7 +50,7 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var message = session.Query<MessageEntity>().Where(x => x.MessageId == id).FirstOrDefault();
+                var message = session.Query<MessageEntity>().FirstOrDefault(x => x.MessageId == id);
                 return message;
             };
         }
@@ -77,6 +77,7 @@ namespace ChatApp.Controllers
         }
 
         // DELETE api/Messages/5
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

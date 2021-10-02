@@ -20,7 +20,7 @@ namespace ChatApp.Models
 
         public virtual int MessageId { get; set; }
         public virtual string Text { get; set; }
-        public virtual UserEntity User { get; set; }
+        public virtual UserEntity User { get; set; } = null;
         public virtual DateTime DateCreated { get; set; } = DateTime.Now;
     }
 }
