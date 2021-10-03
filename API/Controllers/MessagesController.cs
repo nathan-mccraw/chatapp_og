@@ -34,11 +34,11 @@ namespace ChatApp.Controllers
             {
                 var messages = session.Query<MessageEntity>()
                     .Select(message => new MessageModel
-                        {
-                            Text = message.Text,
-                            Username = message.User.Username,
-                            DateCreated = message.DateCreated
-                        }
+                    {
+                        Text = message.Text,
+                        Username = message.User.Username,
+                        DateCreated = message.DateCreated
+                    }
                     );
                 return messages.ToList();
             };

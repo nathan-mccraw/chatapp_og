@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using ChatApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,6 +33,7 @@ namespace ChatApp.Controllers
         }
 
         // GET: api/<UsersController>/5
+        [Authorize]
         [HttpGet("{id}")]
         public UserEntity Get(int id)
         {

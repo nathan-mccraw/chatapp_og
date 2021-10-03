@@ -8,7 +8,7 @@ const Footer = ({ user, signIn, registerNewUser, modalStates, formState, formCha
         <div className="row mt4 justify-content-center align-items-baseline">
             <div className="col-auto p-1">sending message as:</div>
             <div className="col-auto p-1 h5 text-primary">
-                {user && user.userName}
+                {user && user.username}
             </div>
             <div className="col-auto p-1">
                 <button
@@ -17,7 +17,7 @@ const Footer = ({ user, signIn, registerNewUser, modalStates, formState, formCha
                     onClick={modalStates.showSignInModal}
                 >
                     Sign-in
-                     </button>
+                </button>
             </div>
             <Modal
                 show={modalStates.isSignInOpen}

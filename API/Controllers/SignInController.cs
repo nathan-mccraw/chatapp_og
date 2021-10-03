@@ -21,6 +21,9 @@ namespace ChatApp.Controllers
             _sessionFactory = sessionFactory;
         }
 
+        //login attempt: client will send username and password attempt.  API at this endpoint will compare username/password combo to database.  If successful then API will get
+        //bearer token from Azure AD and send it back to the client.  The client will store this token for all other get/post requests.
+
         // GET: api/<SignInController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -30,13 +33,25 @@ namespace ChatApp.Controllers
 
         // POST api/SignIn
         [HttpPost]
-        //public void Post([FromBody] UserLogin user)
+        public object Post([FromBody] SignInModel userAttempt)
+        {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var userEntity = session.Query<UserEntity>().Where(x => x.Username == userAttempt.Username).FirstOrDefault();
+                if (userEntity.Password == userAttempt.Password)
+                {
+                    return userEntity;
+                }
+                else
+                {
+                    return ("bad response");
+                }
+            }
+        }
+
         //{
         //    Console.WriteLine(user.userName);
-        //    //using (var session = _sessionFactory.OpenSession())
-        //    //{
-        //    //    var userEntity = session.Query<UserEntity>().Where(x => x.UserName == user.UserName).FirstOrDefault();
-        //    //}
+
         //}
 
         // DELETE api/SignIn/5

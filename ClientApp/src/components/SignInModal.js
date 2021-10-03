@@ -9,9 +9,9 @@ const SignInModal = ({ formState, signIn, formChange, showRegisterModal }) => {
                         <span className="input-group-text">User Name:</span>
                         <input
                             type="text"
-                            value={formState.userName}
+                            value={formState.username}
                             onChange={formChange}
-                            name="userName"
+                            name="username"
                             className="form-control"
                             placeholder="20 Character Maximum"
                             aria-label="Sizing example input"
@@ -25,9 +25,9 @@ const SignInModal = ({ formState, signIn, formChange, showRegisterModal }) => {
                         <span className="input-group-text">Password:</span>
                         <input
                             type="password"
-                            value={formState.userPassword}
+                            value={formState.password}
                             onChange={formChange}
-                            name="userPassword"
+                            name="password"
                             className="form-control"
                             placeholder="Minimum 4 digits"
                             aria-label="Sizing example input"

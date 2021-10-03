@@ -8,7 +8,6 @@ const Message = ({ message, messageArray }) => {
     if (prevDate !== null && currentDate.getDate() === prevDate.getDate() && currentDate.getMonth() === prevDate.getMonth()) {
         isNotSameDate = false;
     }
-    console.log(message);
     prevDate = new Date(message.dateCreated);
 
     return (

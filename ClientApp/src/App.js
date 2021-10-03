@@ -1,11 +1,11 @@
-import FriendsSideBar from "./FriendsSideBar";
-import ChatInput from "./ChatInput.js";
-import ChatWindow from "./ChatWindow";
-import Footer from "./Footer";
+import FriendsSideBar from "./components/FriendsSideBar";
+import ChatInput from "./components/ChatInput.js";
+import ChatWindow from "./components/ChatWindow";
+import Footer from "./components/Footer";
+import TitleBar from "./components/TitleBar";
 import React from "react";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import TitleBar from "./TitleBar";
 import * as signalR from '@microsoft/signalr';
 
 const App = () => {
@@ -22,8 +22,8 @@ const App = () => {
         hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
     });
     const [formState, setFormState] = useState({
-        userName: "",
-        userPassword: "",
+        username: "",
+        password: "",
         newUser: false,
     });
     const [user, setUser] = useState({
@@ -79,9 +79,6 @@ const App = () => {
             user: user,
         };
 
-        console.log("message:");
-        console.log(message);
-
         if (connection.connectionStarted) {
             try {
                 axios.post("/api/messages", message);
@@ -95,10 +92,10 @@ const App = () => {
         setChatMessage("");
     };
 
-    const signIn = (e) => {
+    const signIn = async (e) => {
         e.preventDefault();
-        console.log("Sign In");
-        console.log(formState);
+        let res = await axios.post("/api/signin", formState);
+        console.log(res);
     };
 
     const registerNewUser = (e) => {
