@@ -9,6 +9,6 @@ namespace ChatApp.Models
         public virtual string Password { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
-        public virtual DateTime DateCreated { get; set; }
+        public virtual DateTime DateCreated { get; set; } = DateTime.Now;
     }
 }

@@ -24,6 +24,7 @@ const App = () => {
     const [formState, setFormState] = useState({
         username: "",
         password: "",
+        confirmPassword: "",
         newUser: false,
     });
     const [user, setUser] = useState({
@@ -95,13 +96,7 @@ const App = () => {
     const signIn = async (e) => {
         e.preventDefault();
         let res = await axios.post("/api/signin", formState);
-        console.log(res);
-    };
-
-    const registerNewUser = (e) => {
-        e.preventDefault();
-        console.log("Register New User");
-        console.log(formState);
+        setUser(res.data);
     };
 
     return (
@@ -124,7 +119,6 @@ const App = () => {
                         <Footer
                             user={user}
                             signIn={signIn}
-                            registerNewUser={registerNewUser}
                             modalStates={modalStates}
                             formState={formState}
                             formChange={formChange}

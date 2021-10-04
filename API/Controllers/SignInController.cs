@@ -21,15 +21,8 @@ namespace ChatApp.Controllers
             _sessionFactory = sessionFactory;
         }
 
-        //login attempt: client will send username and password attempt.  API at this endpoint will compare username/password combo to database.  If successful then API will get
-        //bearer token from Azure AD and send it back to the client.  The client will store this token for all other get/post requests.
-
-        // GET: api/<SignInController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //login attempt: client will send username and password attempt.  API at this endpoint will compare username/password combo to database.  If successful then API will make a JWT bearer token for this user
+        //and send it back to the client.  The client will store this token for all other get/post requests.
 
         // POST api/SignIn
         [HttpPost]
@@ -44,20 +37,35 @@ namespace ChatApp.Controllers
                 }
                 else
                 {
-                    return ("bad response");
+                    return ("Wrong Password");
                 }
             }
         }
 
-        //{
-        //    Console.WriteLine(user.userName);
-
-        //}
+        //Modify user
+        // PUT api/<SignIn>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
         // DELETE api/SignIn/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public object Delete(SignInModel userAttempt)
         {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var userEntity = session.Query<UserEntity>().Where(x => x.Username == userAttempt.Username).FirstOrDefault();
+                if (userEntity.Password == userAttempt.Password)
+                {
+                    session.Delete(userEntity);
+                    return ("Deleted User!");
+                }
+                else
+                {
+                    return ("Wrong password");
+                }
+            }
         }
     }
-}
+} 

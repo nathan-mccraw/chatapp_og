@@ -1,6 +1,20 @@
-﻿import React from "react";
+﻿import axios from "axios";
+import React from "react";
+import { useState } from "react";
 
-const RegisterModal = ({ registerNewUser, formState, formChange, showSignInModal }) => {
+const RegisterModal = ({ showSignInModal }) => {
+    const [registerFormState, setRegisterFormState] = useState({ username: "", password: "", confirmPassword: "", firstName: "", lastName: "" });
+
+    const registerFormChange = (e) => {
+        setRegisterFormState({ ...registerFormState, [e.target.name]: e.target.value });
+    }
+
+    const registerNewUser = async (e) => {
+        e.preventDefault();
+        let res = await axios.post("/api/signup", registerFormState);
+        console.log(res);
+    };
+
     return (
         <div>
             <form action="submit" onSubmit={registerNewUser}>
@@ -9,8 +23,8 @@ const RegisterModal = ({ registerNewUser, formState, formChange, showSignInModal
                         <span className="input-group-text">User Name:</span>
                         <input
                             type="text"
-                            value={formState.userName}
-                            onChange={formChange}
+                            value={registerFormState.userName}
+                            onChange={registerFormChange}
                             name="userName"
                             className="form-control"
                             placeholder="20 Character Maximum"
@@ -25,9 +39,9 @@ const RegisterModal = ({ registerNewUser, formState, formChange, showSignInModal
                         <span className="input-group-text">Password:</span>
                         <input
                             type="password"
-                            value={formState.userPassword}
-                            onChange={formChange}
-                            name="userPassword"
+                            value={registerFormState.password}
+                            onChange={registerFormChange}
+                            name="password"
                             className="form-control"
                             placeholder="Minimum 4 digits"
                             aria-label="Sizing example input"
@@ -41,9 +55,41 @@ const RegisterModal = ({ registerNewUser, formState, formChange, showSignInModal
                         <span className="input-group-text">Confirm Password:</span>
                         <input
                             type="password"
-                            value={formState.userPassword}
-                            onChange={formChange}
-                            name="ConfirmUserPassword"
+                            value={registerFormState.confirmPassword}
+                            onChange={registerFormChange}
+                            name="confirmPassword"
+                            className="form-control"
+                            placeholder="Minimum 4 digits"
+                            aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default"
+                            required
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">First Name:</span>
+                        <input
+                            type="text"
+                            value={registerFormState.firstName}
+                            onChange={registerFormChange}
+                            name="firstName"
+                            className="form-control"
+                            placeholder="Minimum 4 digits"
+                            aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default"
+                            required
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">Last Name:</span>
+                        <input
+                            type="text"
+                            value={registerFormState.lastName}
+                            onChange={registerFormChange}
+                            name="lastName"
                             className="form-control"
                             placeholder="Minimum 4 digits"
                             aria-label="Sizing example input"
