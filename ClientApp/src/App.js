@@ -16,17 +16,15 @@ const App = () => {
     const [modalStates, setModalStates] = useState({
         isSignInOpen: true,
         isRegisterOpen: false,
-        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false }) },
-        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
-        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true }) },
-        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false }) },
+        isModifyUserOpen: false,
+        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false, isModifyUserOpen: false }) },
+        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false }) },
+        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true, isModifyUserOpen: false }) },
+        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false }) },
+        showModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: true }) },
+        hideModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false }) },
     });
-    const [formState, setFormState] = useState({
-        username: "",
-        password: "",
-        confirmPassword: "",
-        newUser: false,
-    });
+    
     const [user, setUser] = useState({
         userId: "1",
         username: "mobellO",
@@ -65,14 +63,6 @@ const App = () => {
         }
     }, [connection]);
 
-    const formChange = (e) => {
-        if (e.target.type === 'checkbox') {
-            setFormState({ ...formState, [e.target.name]: e.target.checked });
-        } else {
-            setFormState({ ...formState, [e.target.name]: e.target.value });
-        }
-    }
-
     const submitMessage = async (e) => {
         e.preventDefault();
         const message = {
@@ -91,12 +81,6 @@ const App = () => {
             console.log('No connection to server');
         }
         setChatMessage("");
-    };
-
-    const signIn = async (e) => {
-        e.preventDefault();
-        let res = await axios.post("/api/signin", formState);
-        setUser(res.data);
     };
 
     return (
@@ -118,10 +102,8 @@ const App = () => {
                         />
                         <Footer
                             user={user}
-                            signIn={signIn}
+                            setUser={setUser}
                             modalStates={modalStates}
-                            formState={formState}
-                            formChange={formChange}
                         />
                     </div>
                 </div>

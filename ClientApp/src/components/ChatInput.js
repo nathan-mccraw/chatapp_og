@@ -5,6 +5,7 @@ const ChatInput = ({
     chatMessage,
     setChatMessage
 }) => {
+
     return (
         <div className="col">
             <form action="submit" onSubmit={submitMessage}>

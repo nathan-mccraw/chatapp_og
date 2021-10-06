@@ -1,6 +1,29 @@
 import React from "react";
+import axios from "axios";
+import { useState } from "react";
 
-const SignInModal = ({ formState, signIn, formChange, showRegisterModal }) => {
+const SignInModal = ({ setUser, showRegisterModal }) => {
+    const [formState, setFormState] = useState({
+        username: "",
+        password: "",
+        confirmPassword: "",
+        newUser: false,
+    });
+
+    const signIn = async (e) => {
+        e.preventDefault();
+        let res = await axios.post("/api/signin", formState);
+        setUser(res.data);
+    };
+
+    const formChange = (e) => {
+        if (e.target.type === 'checkbox') {
+            setFormState({ ...formState, [e.target.name]: e.target.checked });
+        } else {
+            setFormState({ ...formState, [e.target.name]: e.target.value });
+        }
+    }
+
     return (
         <div>
             <form action="submit" onSubmit={signIn}>

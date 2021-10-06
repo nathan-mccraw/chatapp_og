@@ -2,35 +2,34 @@
 import React from "react";
 import { useState } from "react";
 
-const RegisterModal = ({ showSignInModal }) => {
-    const [registerFormState, setRegisterFormState] = useState({ username: "", password: "", confirmPassword: "", firstName: "", lastName: "" });
+const ModifyUserModal = ({ user, hideModifyUserModal }) => {
+    const [modifyUserFormState, setModifyUserFormState] = useState({ username: "", password: "", confirmPassword: "", firstName: "", lastName: "" });
 
-    const registerFormChange = (e) => {
-        setRegisterFormState({ ...registerFormState, [e.target.name]: e.target.value });
+    const modifyUserFormChange = (e) => {
+        setModifyUserFormState({ ...modifyUserFormState, [e.target.name]: e.target.value });
     }
 
-    const registerNewUser = async (e) => {
+    const submitUserChanges = async (e) => {
         e.preventDefault();
-        let res = await axios.post("/api/signup", registerFormState);
+        let res = await axios.put("/api/signup", modifyUserFormState);
         console.log(res);
     };
 
     return (
         <div>
-            <form action="submit" onSubmit={registerNewUser}>
+            <form action="submit" onSubmit={submitUserChanges}>
                 <div className="row">
                     <div className="input-group mb-3">
                         <span className="input-group-text">User Name:</span>
                         <input
                             type="text"
-                            value={registerFormState.username}
-                            onChange={registerFormChange}
+                            value={modifyUserFormState.username}
+                            onChange={modifyUserFormChange}
                             name="username"
                             className="form-control"
-                            placeholder="20 Character Maximum"
+                            placeholder={user.username}
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
-                            required
                         />
                     </div>
                 </div>
@@ -39,8 +38,8 @@ const RegisterModal = ({ showSignInModal }) => {
                         <span className="input-group-text">Password:</span>
                         <input
                             type="password"
-                            value={registerFormState.password}
-                            onChange={registerFormChange}
+                            value={modifyUserFormState.password}
+                            onChange={modifyUserFormChange}
                             name="password"
                             className="form-control"
                             placeholder="Minimum 4 digits"
@@ -55,8 +54,8 @@ const RegisterModal = ({ showSignInModal }) => {
                         <span className="input-group-text">Confirm Password:</span>
                         <input
                             type="password"
-                            value={registerFormState.confirmPassword}
-                            onChange={registerFormChange}
+                            value={modifyUserFormState.confirmPassword}
+                            onChange={modifyUserFormChange}
                             name="confirmPassword"
                             className="form-control"
                             placeholder="Minimum 4 digits"
@@ -71,14 +70,13 @@ const RegisterModal = ({ showSignInModal }) => {
                         <span className="input-group-text">First Name:</span>
                         <input
                             type="text"
-                            value={registerFormState.firstName}
-                            onChange={registerFormChange}
+                            value={modifyUserFormState.firstName}
+                            onChange={modifyUserFormChange}
                             name="firstName"
                             className="form-control"
-                            placeholder="Minimum 4 digits"
+                            placeholder={user.firstName}
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
-                            required
                         />
                     </div>
                 </div>
@@ -87,27 +85,26 @@ const RegisterModal = ({ showSignInModal }) => {
                         <span className="input-group-text">Last Name:</span>
                         <input
                             type="text"
-                            value={registerFormState.lastName}
-                            onChange={registerFormChange}
+                            value={modifyUserFormState.lastName}
+                            onChange={modifyUserFormChange}
                             name="lastName"
                             className="form-control"
-                            placeholder="Minimum 4 digits"
+                            placeholder={user.lastName}
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
-                            required
                         />
                     </div>
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-auto mb-4">
                         <button type="submit" className="btn btn-success">
-                            Register
+                            Submit Changes
                         </button>
                     </div>
                 </div>
                 <div className="row justify-content-center mb-0 pb-0 mt-4 pt-4 h6 text-primary">
-                    <button type="button" className="btn btn-outline-primary border-0" onClick={showSignInModal}>
-                        Sign In As Existing User
+                    <button type="button" className="btn btn-outline-primary border-0" onClick={hideModifyUserModal}>
+                        Close
                     </button>
                 </div>
             </form>
@@ -115,4 +112,4 @@ const RegisterModal = ({ showSignInModal }) => {
     )
 }
 
-export default RegisterModal;
+export default ModifyUserModal;

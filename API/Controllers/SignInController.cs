@@ -21,9 +21,6 @@ namespace ChatApp.Controllers
             _sessionFactory = sessionFactory;
         }
 
-        //login attempt: client will send username and password attempt.  API at this endpoint will compare username/password combo to database.  If successful then API will make a JWT bearer token for this user
-        //and send it back to the client.  The client will store this token for all other get/post requests.
-
         // POST api/SignIn
         [HttpPost]
         public object Post([FromBody] SignInModel userAttempt)
@@ -43,10 +40,23 @@ namespace ChatApp.Controllers
         }
 
         //Modify user
-        // PUT api/<SignIn>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<SignIn>
+        [HttpPut]
+        public object Put([FromBody] UserEntity user)
         {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var userEntity = session.Query<UserEntity>().Where(x => x.UserId == user.UserId).FirstOrDefault();
+                if (userEntity.Password == user.Password)
+                {
+
+                    return userEntity;
+                }
+                else
+                {
+                    return ("Wrong Password");
+                }
+            }
         }
 
         // DELETE api/SignIn/5
