@@ -17,19 +17,22 @@ const App = () => {
         isSignInOpen: true,
         isRegisterOpen: false,
         isModifyUserOpen: false,
-        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false, isModifyUserOpen: false }) },
-        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false }) },
-        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true, isModifyUserOpen: false }) },
-        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false }) },
-        showModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: true }) },
-        hideModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false }) },
+        isSignOutOpen: false,
+        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true, isModifyUserOpen: false, isSignOutOpen: false }) },
+        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        showModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: true, isSignOutOpen: false }) },
+        hideModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        showSignOutModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: true }) },
+        hideSignOutModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
     });
-    
+
     const [user, setUser] = useState({
         userId: "1",
-        username: "mobellO",
-        firstName: "Millisent",
-        lastName: "Obell",
+        username: "Guest",
+        firstName: "Guest",
+        lastName: "Guest",
         DateCreated: "2021-09-24T00:28:21",
     });
     const latestChat = useRef(null);

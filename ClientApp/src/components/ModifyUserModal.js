@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 
 const ModifyUserModal = ({ user, hideModifyUserModal }) => {
-    const [modifyUserFormState, setModifyUserFormState] = useState({ username: "", password: "", confirmPassword: "", firstName: "", lastName: "" });
+    const [modifyUserFormState, setModifyUserFormState] = useState({ userId: user.userId, username: "", password: "", confirmPassword: "", firstName: "", lastName: "" });
 
     const modifyUserFormChange = (e) => {
         setModifyUserFormState({ ...modifyUserFormState, [e.target.name]: e.target.value });
@@ -11,7 +11,7 @@ const ModifyUserModal = ({ user, hideModifyUserModal }) => {
 
     const submitUserChanges = async (e) => {
         e.preventDefault();
-        let res = await axios.put("/api/signup", modifyUserFormState);
+        let res = await axios.put("/api/signin", modifyUserFormState);
         console.log(res);
     };
 

@@ -49,6 +49,18 @@ namespace ChatApp.Controllers
                 var userEntity = session.Query<UserEntity>().Where(x => x.UserId == user.UserId).FirstOrDefault();
                 if (userEntity.Password == user.Password)
                 {
+                    if (user.Username != "")
+                        userEntity.Username = user.Username;
+                    if (user.FirstName != "")
+                        userEntity.FirstName = user.FirstName;
+                    if (user.LastName != "")
+                        userEntity.LastName = user.LastName;
+
+                    using (var transmit = session.BeginTransaction())
+                    {
+                        session.Save(userEntity);
+                        transmit.Commit();
+                    }
 
                     return userEntity;
                 }
@@ -78,4 +90,4 @@ namespace ChatApp.Controllers
             }
         }
     }
-} 
+}

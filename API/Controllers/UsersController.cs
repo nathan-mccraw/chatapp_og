@@ -4,6 +4,7 @@ using System.Linq;
 using NHibernate;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using NHibernate.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,7 +34,6 @@ namespace ChatApp.Controllers
         }
 
         // GET: api/<UsersController>/5
-        [Authorize]
         [HttpGet("{id}")]
         public UserEntity Get(int id)
         {
@@ -65,8 +65,9 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var user = session.Query<UserEntity>().Where(x => x.UserId == id).FirstOrDefault();
-                session.Delete(user);
+                session.Query<UserEntity>()
+                    .Where(x => x.UserId == id)
+                    .Delete();
             };
         }
     }
