@@ -3,8 +3,19 @@ import Modal from "react-bootstrap/Modal";
 import ModifyUserModal from "./ModifyUserModal";
 import RegisterModal from "./RegisterModal";
 import SignInModal from "./SignInModal";
+import SignOutModal from "./SignOutModal";
 
 const Footer = ({ user, setUser, modalStates }) => {
+    const signOut = () => {
+        setUser({
+            userId: "1",
+            username: "Guest",
+            firstName: "Guest",
+            lastName: "Guest",
+            DateCreated: "2021-09-24T00:28:21",
+        })
+    }
+
     return (
         <div className="row mt4 justify-content-center align-items-baseline">
             <div className="col-auto p-1">sending message as:</div>
@@ -70,7 +81,7 @@ const Footer = ({ user, setUser, modalStates }) => {
                     <h3>Modify Profile</h3>
                 </Modal.Header>
                 <Modal.Body>
-                    <ModifyUserModal user={user} hideModifyUserModal={modalStates.hideModifyUserModal} />
+                    <ModifyUserModal user={user} signOut={signOut} />
                 </Modal.Body>
             </Modal>
             <Modal
@@ -82,7 +93,7 @@ const Footer = ({ user, setUser, modalStates }) => {
                     <h3>Sign Out?</h3>
                 </Modal.Header>
                 <Modal.Body>
-                    <ModifyUserModal user={user} hideSignOutModal={modalStates.hideSignOutModal} />
+                    <SignOutModal signOut={signOut} hideSignOutModal={modalStates.hideSignOutModal} />
                 </Modal.Body>
             </Modal>
         </div>

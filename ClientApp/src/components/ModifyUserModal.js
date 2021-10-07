@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 
-const ModifyUserModal = ({ user, hideModifyUserModal }) => {
+const ModifyUserModal = ({ user, signOut }) => {
     const [modifyUserFormState, setModifyUserFormState] = useState({ userId: user.userId, username: "", password: "", confirmPassword: "", firstName: "", lastName: "" });
 
     const modifyUserFormChange = (e) => {
@@ -14,6 +14,12 @@ const ModifyUserModal = ({ user, hideModifyUserModal }) => {
         let res = await axios.put("/api/signin", modifyUserFormState);
         console.log(res);
     };
+
+    const deleteUser = async (e) => {
+        e.preventDefault();
+        await axios.delete("/api/signin", user);
+        signOut();
+    }
 
     return (
         <div>
@@ -103,8 +109,8 @@ const ModifyUserModal = ({ user, hideModifyUserModal }) => {
                     </div>
                 </div>
                 <div className="row justify-content-center mb-0 pb-0 mt-4 pt-4 h6 text-primary">
-                    <button type="button" className="btn btn-outline-primary border-0" onClick={hideModifyUserModal}>
-                        Close
+                    <button type="button" className="btn btn-outline-danger border-0" onClick={deleteUser}>
+                        Delete
                     </button>
                 </div>
             </form>

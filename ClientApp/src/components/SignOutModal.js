@@ -1,15 +1,7 @@
 ﻿import React from "react";
 
-const SignOutModal = ({ setUser, hideSignOutModal }) => {
-    const signOut = () => {
-        setUser({
-            userId: "1",
-            username: "Guest",
-            firstName: "Guest",
-            lastName: "Guest",
-            DateCreated: "2021-09-24T00:28:21",
-        })
-    }
+const SignOutModal = ({ signOut, hideSignOutModal }) => {
+    
 
     return (
         <div>

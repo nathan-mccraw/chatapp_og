@@ -13,7 +13,8 @@ const SignInModal = ({ setUser, showRegisterModal }) => {
     const signIn = async (e) => {
         e.preventDefault();
         let res = await axios.post("/api/signin", formState);
-        setUser(res.data);
+        if (res.data !== "Wrong Password")
+            setUser(res.data);
     };
 
     const formChange = (e) => {

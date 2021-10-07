@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NHibernate;
 using ChatApp.Models;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -67,6 +68,7 @@ namespace ChatApp.Controllers
                 else
                 {
                     return ("Wrong Password");
+                    
                 }
             }
         }
@@ -77,7 +79,7 @@ namespace ChatApp.Controllers
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var userEntity = session.Query<UserEntity>().Where(x => x.Username == userAttempt.Username).FirstOrDefault();
+                var userEntity = session.Query<UserEntity>().Where(x => x.UserId == id).FirstOrDefault();
                 if (userEntity.Password == userAttempt.Password)
                 {
                     session.Delete(userEntity);
