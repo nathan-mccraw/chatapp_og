@@ -34,32 +34,29 @@ namespace ChatApp.Controllers
             using (var session = _sessionFactory.OpenSession())
             {
                 var messages = session.Query<MessageEntity>()
-                    .Select(message => new MessageModel
-                    {
-                        Text = message.Text,
-                        Username = message.User.Username,
-                        DateCreated = message.DateCreated
-                    }
-                    );
+                    .Select(message => new MessageModel(message));
+
                 return messages.ToList();
             };
         }
 
         // GET api/Messages/5
         [HttpGet("{id}")]
-        public MessageEntity Get(int id)
+        public MessageModel Get(int id)
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var message = session.Query<MessageEntity>().FirstOrDefault(x => x.MessageId == id);
+                var msg = session.Query<MessageEntity>().FirstOrDefault(x => x.MessageId == id);
+                MessageModel message = new MessageModel(msg);
                 return message;
             };
         }
 
-        // POST api/Messages
+        //POST api/Messages
         [HttpPost]
         public async Task Post(MessageEntity postedMessage)
         {
+            //add verification comparing client side stored token to user session table token
             using (var session = _sessionFactory.OpenSession())
             {
                 using (var transmit = session.BeginTransaction())
@@ -68,12 +65,7 @@ namespace ChatApp.Controllers
                     transmit.Commit();
                 }
             };
-            var outgoingMessage = new MessageModel
-            {
-                Text = postedMessage.Text,
-                Username = postedMessage.User.Username,
-                DateCreated = postedMessage.DateCreated
-            };
+            MessageModel outgoingMessage = new MessageModel(postedMessage);
             await _chatHub.Clients.All.ReceiveMessage(outgoingMessage);
         }
 

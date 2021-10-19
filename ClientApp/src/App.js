@@ -1,33 +1,20 @@
+import React from "react";
+import axios from "axios";
+import { useEffect, useState, useRef } from "react";
+import * as signalR from '@microsoft/signalr';
+import "./App.css";
 import FriendsSideBar from "./components/FriendsSideBar";
 import ChatInput from "./components/ChatInput.js";
 import ChatWindow from "./components/ChatWindow";
 import Footer from "./components/Footer";
 import TitleBar from "./components/TitleBar";
-import React from "react";
-import axios from "axios";
-import { useEffect, useState, useRef } from "react";
-import * as signalR from '@microsoft/signalr';
+
 
 const App = () => {
     const [connection, setConnection] = useState(null);
     const [messageArray, setMessageArray] = useState("");
     const [otherUsersArray, setOtherUsersArray] = useState("");
     const [chatMessage, setChatMessage] = useState("");
-    const [modalStates, setModalStates] = useState({
-        isSignInOpen: true,
-        isRegisterOpen: false,
-        isModifyUserOpen: false,
-        isSignOutOpen: false,
-        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
-        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
-        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true, isModifyUserOpen: false, isSignOutOpen: false }) },
-        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
-        showModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: true, isSignOutOpen: false }) },
-        hideModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
-        showSignOutModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: true }) },
-        hideSignOutModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
-    });
-
     const [user, setUser] = useState({
         userId: "1",
         username: "Guest",
@@ -48,6 +35,8 @@ const App = () => {
         axios.get("/api/messages").then((response) => {
             setMessageArray(response.data);
         });
+
+        setTimeout(updateScroll, 1000);
     }, []);
 
     useEffect(() => {
@@ -60,6 +49,7 @@ const App = () => {
                         const updatedChat = [...latestChat.current];
                         updatedChat.push(message);
                         setMessageArray(updatedChat);
+                        setTimeout(updateScroll, 500);
                     });
                 })
                 .catch(e => console.log(e));
@@ -86,18 +76,21 @@ const App = () => {
         setChatMessage("");
     };
 
+    const updateScroll = () => {
+        const chatRoomElement = document.getElementById('chatRoom');
+        chatRoomElement.scrollTop = chatRoomElement.scrollHeight;
+    }
+
     return (
-        <div className="App container-fluid vh-100">
-            <div className="row vh-100">
-                <div className="col-md-auto p-0">
-                    <FriendsSideBar otherUsersArray={otherUsersArray} />
-                </div>
-                <div className="col vh-100 p-0">
-                    <div className="col overflow-auto m-0 h-75">
+        <div className="App container-fluid">
+            <div className="row">
+                <FriendsSideBar otherUsersArray={otherUsersArray} />
+                <div id="chatWindowContainer" className="col p-0">
+                    <div id="chatWindow" className="col m-0">
                         <TitleBar />
                         <ChatWindow messageArray={messageArray} />
                     </div>
-                    <div className="row m-0 h-25">
+                    <div className="row m-0">
                         <ChatInput
                             submitMessage={submitMessage}
                             chatMessage={chatMessage}
@@ -106,7 +99,6 @@ const App = () => {
                         <Footer
                             user={user}
                             setUser={setUser}
-                            modalStates={modalStates}
                         />
                     </div>
                 </div>

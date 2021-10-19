@@ -1,11 +1,27 @@
 ﻿import React from "react";
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import ModifyUserModal from "./ModifyUserModal";
 import RegisterModal from "./RegisterModal";
 import SignInModal from "./SignInModal";
 import SignOutModal from "./SignOutModal";
 
-const Footer = ({ user, setUser, modalStates }) => {
+const Footer = ({ user, setUser }) => {
+    const [modalStates, setModalStates] = useState({
+        isSignInOpen: true,
+        isRegisterOpen: false,
+        isModifyUserOpen: false,
+        isSignOutOpen: false,
+        showSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: true, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        hideSignInModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        showRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: true, isModifyUserOpen: false, isSignOutOpen: false }) },
+        hideRegisterModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        showModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: true, isSignOutOpen: false }) },
+        hideModifyUserModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+        showSignOutModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: true }) },
+        hideSignOutModal: function () { setModalStates({ ...modalStates, isSignInOpen: false, isRegisterOpen: false, isModifyUserOpen: false, isSignOutOpen: false }) },
+    });
+
     const signOut = () => {
         setUser({
             userId: "1",
@@ -14,7 +30,7 @@ const Footer = ({ user, setUser, modalStates }) => {
             lastName: "Guest",
             DateCreated: "2021-09-24T00:28:21",
         })
-    }
+    };
 
     return (
         <div className="row mt4 justify-content-center align-items-baseline">

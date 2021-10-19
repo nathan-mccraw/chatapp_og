@@ -2,7 +2,6 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="ChatApp"
                    namespace="ChatApp.Models">
-
 	<class name="MessageEntity" table="messages">
 		<id name="MessageId" column = "message_id">
 			<generator class="native" />

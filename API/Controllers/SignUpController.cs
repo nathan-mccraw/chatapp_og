@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +15,6 @@ namespace ChatApp.Controllers
     [ApiController]
     public class SignUpController : ControllerBase
     {
-
         private ISessionFactory _sessionFactory;
 
         public SignUpController(ISessionFactory sessionFactory)
@@ -35,6 +35,8 @@ namespace ChatApp.Controllers
                 }
                 else
                 {
+                    string hashedPassword = BC.HashPassword(userAttempt.Password);
+                    userAttempt.Password = hashedPassword;
                     Console.WriteLine(userAttempt.Password);
                     using (var transmit = session.BeginTransaction())
                     {

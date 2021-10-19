@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="axios.js" Version="0.18.0" />
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="bootstrap" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="5.0.10" />
@@ -22,8 +23,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="API\Entities\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="API\Entities\**" />
+    <EmbeddedResource Remove="API\Entities\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="API\Entities\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -77,20 +82,16 @@
   <ItemGroup>
     <None Remove="API\Mappings\Messages.hbm.xml" />
     <None Remove="API\Mappings\Users.hbm.xml" />
+    <None Remove="API\Mappings\UserSessions.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="API\Mappings\Messages.hbm.xml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="API\Mappings\Messages.hbm.xml" />
     <EmbeddedResource Include="API\Mappings\Users.hbm.xml" />
+    <EmbeddedResource Include="API\Mappings\UserSessions.hbm.xml" />
     <EmbeddedResource Include="nhibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="API\Entities\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

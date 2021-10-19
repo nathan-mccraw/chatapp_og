@@ -12,5 +12,6 @@
 		<property name="FirstName" column ="first_name" />
 		<property name="LastName" column ="last_name" />
 		<property name="DateCreated" column ="date_created" />
+		<property name="LastActive" column="last_active" />
 	</class>
 </hibernate-mapping>

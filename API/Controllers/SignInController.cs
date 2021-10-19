@@ -31,7 +31,19 @@ namespace ChatApp.Controllers
                 var userEntity = session.Query<UserEntity>().Where(x => x.Username == userAttempt.Username).FirstOrDefault();
                 if (userEntity.Password == userAttempt.Password)
                 {
-                    return userEntity;
+                    UserSession userSession = new UserSession();
+                    userSession.UserId = userEntity.UserId;
+
+                    using (var transmit = session.BeginTransaction())
+                    {
+                        session.Save(userSession);
+                        transmit.Commit();
+                    }
+
+                    UserModel userModel = new UserModel(userEntity);
+                    userModel.UserToken = userSession.UserToken;
+
+                    return userModel;
                 }
                 else
                 {
@@ -68,18 +80,17 @@ namespace ChatApp.Controllers
                 else
                 {
                     return ("Wrong Password");
-                    
                 }
             }
         }
 
         // DELETE api/SignIn/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public object Delete(SignInModel userAttempt)
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var userEntity = session.Query<UserEntity>().Where(x => x.UserId == id).FirstOrDefault();
+                var userEntity = session.Query<UserEntity>().Where(x => x.Username == userAttempt.Username).FirstOrDefault();
                 if (userEntity.Password == userAttempt.Password)
                 {
                     session.Delete(userEntity);
