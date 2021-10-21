@@ -2,13 +2,14 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import * as signalR from '@microsoft/signalr';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import "./App.css";
 import FriendsSideBar from "./components/FriendsSideBar";
 import ChatInput from "./components/ChatInput.js";
 import ChatWindow from "./components/ChatWindow";
 import Footer from "./components/Footer";
 import TitleBar from "./components/TitleBar";
-
+import SignIn from "./components/SignIn";
 
 const App = () => {
     const [connection, setConnection] = useState(null);
@@ -36,7 +37,7 @@ const App = () => {
             setMessageArray(response.data);
         });
 
-        setTimeout(updateScroll, 1000);
+        //setTimeout(updateScroll, 1000);
     }, []);
 
     useEffect(() => {
@@ -49,7 +50,7 @@ const App = () => {
                         const updatedChat = [...latestChat.current];
                         updatedChat.push(message);
                         setMessageArray(updatedChat);
-                        setTimeout(updateScroll, 500);
+                       // setTimeout(updateScroll, 500);
                     });
                 })
                 .catch(e => console.log(e));
@@ -82,28 +83,31 @@ const App = () => {
     }
 
     return (
-        <div className="App container-fluid">
-            <div className="row">
-                <FriendsSideBar otherUsersArray={otherUsersArray} />
-                <div id="chatWindowContainer" className="col p-0">
-                    <div id="chatWindow" className="col m-0">
-                        <TitleBar />
-                        <ChatWindow messageArray={messageArray} />
-                    </div>
-                    <div className="row m-0">
-                        <ChatInput
-                            submitMessage={submitMessage}
-                            chatMessage={chatMessage}
-                            setChatMessage={setChatMessage}
-                        />
-                        <Footer
-                            user={user}
-                            setUser={setUser}
-                        />
+        //<SignIn />
+        //<Router>
+            <div className="App container-fluid">
+                <div className="row">
+                    <FriendsSideBar otherUsersArray={otherUsersArray} />
+                    <div id="chatWindowContainer" className="col p-0">
+                        <div id="chatWindow" className="col m-0">
+                            <TitleBar />
+                            <ChatWindow messageArray={messageArray} />
+                        </div>
+                        <div className="row m-0">
+                            <ChatInput
+                                submitMessage={submitMessage}
+                                chatMessage={chatMessage}
+                                setChatMessage={setChatMessage}
+                            />
+                            <Footer
+                                user={user}
+                                setUser={setUser}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        //</Router>
     );
 };
 

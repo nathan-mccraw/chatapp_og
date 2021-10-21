@@ -5,3 +5,16 @@
 #friendsSideBar{
     height: 91vh;
 }
+
+#signIn {
+    background-image: url("Photos/OutPost.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: dimgray;
+    justify-content: center;
+}
+
+#signInForm{
+    max-width: 500px;
+}
