@@ -15,6 +15,19 @@
     justify-content: center;
 }
 
-#signInForm{
+#RegisterNewUser, #ModifyUserProfile {
+    background-image: url("Photos/Trenches2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: dimgray;
+    justify-content: center;
+}
+
+#RegisterFormBox, #ModifyUserFormBox {
+    background: linear-gradient(rgba(0,0,0,1), rgba(108,117,125,1));
+}
+
+#signInForm {
     max-width: 500px;
 }

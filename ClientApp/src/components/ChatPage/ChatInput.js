@@ -23,7 +23,7 @@ const ChatInput = ({
                     <div className="col-auto">
                         <button type="submit" className="btn btn-outline-secondary">
                             Send
-            </button>
+                        </button>
                     </div>
                 </div>
             </form>
